@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "test": "mocha --require ts-node/register test/index.test.ts --timeout 180000",
+    "test:watch": "mocha --require ts-node/register --watch --watch-files '**/*.ts'",
+    "test:report": "mocha --require ts-node/register test/index.test.ts --reporter mochawesome --reporter-options reportDir=reports,reportFilename=nexus-core-full-report,inlineAssets=true,charts=true"
+  }
+}
