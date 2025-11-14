@@ -1,4 +1,5 @@
 import { describe, it, before } from 'mocha';
+import { expect } from 'chai';
 import { getSDK } from '../fixtures/sdk';
 import { ethers } from 'ethers';
 
