@@ -1,4 +1,4 @@
-import { describe, it } from 'mocha';
+import { describe, it, before } from 'mocha';
 import { expect } from 'chai';
 import { getSDK } from './fixtures/sdk';
 

@@ -1,6 +1,11 @@
 import { describe, it, before } from 'mocha';
 import sinon from 'sinon';
+import * as chai from 'chai';
+import sinonChai from 'sinon-chai';
 import { getSDK } from './fixtures/sdk';
+
+const { expect } = chai;
+chai.use(sinonChai);
 
 describe('Intent & Allowance Hooks', () => {
     let sdk: any;
