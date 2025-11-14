@@ -1,1 +1,4 @@
 .idea
+node_modules
+.mocharc.json
+tsconfig.json
