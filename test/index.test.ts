@@ -1,6 +1,11 @@
 import './operations/balance.test';
 import './operations/bridge.test';
+import './operations/bridge-execute.test';
+import './operations/fast-bridge.test';
 import './operations/transfer.test';
 import './operations/swap.test';
+import './operations/unified-balance.test';
+import './operations/wallet-connect.test';
 import './utils.test';
 import './hooks.test';
+import './operations/events.test';
