@@ -177,6 +177,39 @@ const createProviderAdapter = (ethersProvider: ethers.JsonRpcProvider): any => {
         getTransactionReceipt: ethersProvider.getTransactionReceipt.bind(ethersProvider),
         getCode: ethersProvider.getCode.bind(ethersProvider),
         getStorage: ethersProvider.getStorage.bind(ethersProvider),
+        
+        // Add event listener methods for SDK deinit
+        // These are required by the SDK for cleanup
+        on: (event: string, listener: Function) => {
+            // Mock event listener registration
+            if (ethersProvider && typeof ethersProvider.on === 'function') {
+                return ethersProvider.on(event, listener);
+            }
+            // Return adapter for chaining
+            return adapter;
+        },
+        removeListener: (event: string, listener: Function) => {
+            // Mock event listener removal - always provide a function
+            // SDK requires this for cleanup, so we always return the adapter
+            if (ethersProvider && typeof ethersProvider.removeListener === 'function') {
+                try {
+                    return ethersProvider.removeListener(event, listener);
+                } catch (error) {
+                    // If underlying provider fails, just return adapter
+                    return adapter;
+                }
+            }
+            // Always return adapter for chaining - prevents SDK deinit errors
+            return adapter;
+        },
+        removeAllListeners: (event?: string) => {
+            // Mock remove all listeners
+            if (ethersProvider && typeof ethersProvider.removeAllListeners === 'function') {
+                return ethersProvider.removeAllListeners(event);
+            }
+            // Return adapter for chaining even if not implemented
+            return adapter;
+        },
     };
     
     return adapter;
