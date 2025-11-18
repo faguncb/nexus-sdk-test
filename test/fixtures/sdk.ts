@@ -67,7 +67,30 @@ export const getSDK = async (): Promise<NexusSDK> => {
 
 export const resetSDK = async () => {
     if (sdkInstance) {
-        await sdkInstance.deinit();
-        sdkInstance = undefined as any;
+        try {
+            await sdkInstance.deinit();
+        } catch (error: any) {
+            // Log but don't throw - cleanup errors shouldn't fail tests
+            console.log('SDK cleanup warning:', error.message || error);
+        } finally {
+            sdkInstance = undefined as any;
+        }
     }
 };
+
+// Ensure cleanup on process exit
+if (typeof process !== 'undefined') {
+    process.on('exit', async () => {
+        await resetSDK();
+    });
+    
+    process.on('SIGINT', async () => {
+        await resetSDK();
+        process.exit(0);
+    });
+    
+    process.on('SIGTERM', async () => {
+        await resetSDK();
+        process.exit(0);
+    });
+}
